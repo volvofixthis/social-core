@@ -64,6 +64,13 @@ def user_agent():
     return 'social-auth-' + social_core.__version__
 
 
+def url_fix_facebook_redirect(url):
+    fragments = urlparse(url)
+    if fragments[5] == '_=_':
+        fragments = fragments[:-1] + ('', )
+    return urlunparse(fragments)
+
+
 def url_add_parameters(url, params):
     """Adds parameters to URL, parameter will be repeated if already present"""
     if params:

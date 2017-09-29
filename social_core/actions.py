@@ -1,7 +1,8 @@
 from six.moves.urllib_parse import quote
 
 from .utils import sanitize_redirect, user_is_authenticated, \
-                   user_is_active, partial_pipeline_data, setting_url
+                   user_is_active, partial_pipeline_data, setting_url, \
+                   url_fix_facebook_redirect
 
 
 def do_auth(backend, redirect_name='next'):
@@ -95,6 +96,8 @@ def do_complete(backend, login, user=None, redirect_name='next',
                         [backend.strategy.request_host()]
         url = sanitize_redirect(allowed_hosts, url) or \
               backend.setting('LOGIN_REDIRECT_URL')
+    if social_user.provider == 'facebook':
+        url = url_fix_facebook_redirect(url)
     return backend.strategy.redirect(url)
 
 

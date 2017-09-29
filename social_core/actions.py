@@ -96,11 +96,9 @@ def do_complete(backend, login, user=None, redirect_name='next',
                         [backend.strategy.request_host()]
         url = sanitize_redirect(allowed_hosts, url) or \
               backend.setting('LOGIN_REDIRECT_URL')
-    print 'Auth provider', social_user.provider
+    raise ValueError(social_user.provider + ' ' + url)
     if social_user.provider == 'facebook':
-        print 'Url before', url
         url = url_fix_facebook_redirect(url)
-        print 'Url after', url
     return backend.strategy.redirect(url)
 
 

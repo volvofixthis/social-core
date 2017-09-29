@@ -98,7 +98,7 @@ def do_complete(backend, login, user=None, redirect_name='next',
               backend.setting('LOGIN_REDIRECT_URL')
     # fixme: just guess
     try:
-        if social_user.provider == 'facebook':
+        if user.social_user.provider == 'facebook':
             url = url_fix_facebook_redirect(url)
     except:
         pass

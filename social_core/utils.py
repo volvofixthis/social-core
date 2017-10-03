@@ -66,7 +66,7 @@ def user_agent():
 
 def url_fix_facebook_redirect(url):
     fragments = urlparse(url)
-    if fragments[5] == '_=_':
+    if fragments[5] in ('_=_', '', ):
         fragments = fragments[:-1] + ('', )
     return urlunparse(fragments)
 

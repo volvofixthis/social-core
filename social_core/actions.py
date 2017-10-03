@@ -85,7 +85,8 @@ def do_complete(backend, login, user=None, redirect_name='next',
                               'LOGIN_URL')
     else:
         url = setting_url(backend, 'LOGIN_ERROR_URL', 'LOGIN_URL')
-
+    if redirect_value:
+        redirect_value = url_fix_facebook_redirect(redirect_value)
     if redirect_value and redirect_value != url:
         redirect_value = quote(redirect_value)
         url += ('&' if '?' in url else '?') + \
@@ -96,7 +97,6 @@ def do_complete(backend, login, user=None, redirect_name='next',
                         [backend.strategy.request_host()]
         url = sanitize_redirect(allowed_hosts, url) or \
               backend.setting('LOGIN_REDIRECT_URL')
-    url = url_fix_facebook_redirect(url)
     return backend.strategy.redirect(url)
 
 
